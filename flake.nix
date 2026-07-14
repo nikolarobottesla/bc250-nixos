@@ -14,7 +14,7 @@ inputs = {
        };
   in 
   { 
-    nixosModules.bc250 = { config, lib, pkgs, ... }: import ./default { inherit config lib pkgs; };
+    nixosModules.bc250 = { config, lib, pkgs, ... }: import ./default.nix { inherit config lib pkgs; };
         devShells.${system}.default = pkgs.mkShell {
         name = "bc250-dev";
     };
