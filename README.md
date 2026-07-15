@@ -10,7 +10,7 @@ Also comes with a wrapper for the AIC8800d80 driver, a chipset used in some WiFi
 
 ## Usage
 
-Not really designed with Flakes in mind, but feel free to submit a PR.
+### As a NixOS module
 
 ```nix
 {
@@ -37,4 +37,44 @@ Not really designed with Flakes in mind, but feel free to submit a PR.
     };
   };
 }
+```
+
+### As a NixOS module in a Flake
+
+Add this input :
+```nix
+inputs = {
+  bc-250.url = "github:TesseractCat/bc250-nixos"
+}
+```
+
+Then load the module into your config :
+```nix
+    nixosConfigurations.<hostname> = nixpkgs.lib.nixosSystem {
+      modules = [
+          bc-250.nixosModules.bc250
+      ]
+    }
+```
+
+Now you can use it in your configuration:
+```nix
+ { pkgs, ... }:{
+  
+    hardware.bc250 = {
+    enable = true;
+
+    features = {
+      # Disabled by default
+      aic8800d80.enable = false;
+      cuLiveManager.enable = false;
+
+      # Enabled by default
+      sensors.enable = true;
+      governor.enable = true;
+      zram.enable = true;
+    };
+  };
+ }
+
 ```
